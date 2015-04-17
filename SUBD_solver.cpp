@@ -178,22 +178,24 @@ vector<pair<string, int> > find_relation(vector<Table>& tbuf, string curr, strin
 			curr_ind = i;
 			continue;
 		}
-		if(tbuf[i].name != back)names.push_back(tbuf[i].name);
-		for(int j = 0; j < tbuf[i].colnames.size(); ++j){
-			if(tbuf[i].colnames[j] == name){
-				vector<pair<string, int> > s = find_relation(tbuf, tbuf[i].name, end, curr);
-				if(!s.empty()){
-					s.push_back(make_pair(curr, CONTAINED_BY));
-					return s;
+		if(tbuf[i].name != back){
+			names.push_back(tbuf[i].name);
+			for(int j = 0; j < tbuf[i].colnames.size(); ++j){
+				if(tbuf[i].colnames[j] == name){
+					vector<pair<string, int> > s = find_relation(tbuf, tbuf[i].name, end, curr);
+					if(!s.empty()){
+						s.push_back(make_pair(curr, CONTAINED_BY));
+						return s;
+					}
 				}
 			}
-		}
-		for(int j = 0; j < tbuf[i].ones.size(); ++j){
-			if(tbuf[i].ones[j] == name){
-				vector<pair<string, int> > s = find_relation(tbuf, tbuf[i].name, end, curr);
-				if(!s.empty()){
-					s.push_back(make_pair(curr, ONE_RELATED));
-					return s;
+			for(int j = 0; j < tbuf[i].ones.size(); ++j){
+				if(tbuf[i].ones[j] == name){
+					vector<pair<string, int> > s = find_relation(tbuf, tbuf[i].name, end, curr);
+					if(!s.empty()){
+						s.push_back(make_pair(curr, ONE_RELATED));
+						return s;
+					}
 				}
 			}
 		}
